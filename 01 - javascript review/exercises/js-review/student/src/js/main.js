@@ -156,6 +156,7 @@ btnAdd.addEventListener('click', (event) => {
 
   tasks.push({ title, done: false});
   list.innerHTML = renderTaskList(tasks);
+  txtTask.value = '';
 })
 // --------------------------------------------------
 // STEP 9: Student Exercise
