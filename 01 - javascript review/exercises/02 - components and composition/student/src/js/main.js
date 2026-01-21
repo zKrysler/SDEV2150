@@ -1,14 +1,15 @@
 // main.js
+// Additional Reading: https://developer.mozilla.org/en-US/docs/Web/API/Web_components
 
 // --------------------------------------------------
 // STEP 1: Import component modules so they register
 // --------------------------------------------------
 // TODO: Create these files in src/js/components/ and then uncomment imports.
 
-// import './components/resource-header.js';
-// import './components/resource-filters.js';
-// import './components/resource-results.js';
-// import './components/resource-details.js';
+import './components/resource-header.js';
+import './components/resource-filters.js';
+import './components/resource-results.js';
+import './components/resource-details.js';
 
 // Optional stretch:
 // import './components/resource-item.js';
@@ -20,12 +21,12 @@
 // Once your component files exist and are imported above,
 // update src/index.html so it uses:
 //
-// <resource-header></resource-header>
-// <div class="row g-3">
-//   <resource-filters class="col-12 col-lg-4"></resource-filters>
-//   <resource-results class="col-12 col-lg-4"></resource-results>
-//   <resource-details class="col-12 col-lg-4"></resource-details>
-// </div>
+{/* <resource-header></resource-header>
+<div class="row g-3">
+  <resource-filters class="col-12 col-lg-4"></resource-filters>
+  <resource-results class="col-12 col-lg-4"></resource-results>
+  <resource-details class="col-12 col-lg-4"></resource-details>
+</div> */}
 //
 // At that point the page will be empty until each component renders.
 
