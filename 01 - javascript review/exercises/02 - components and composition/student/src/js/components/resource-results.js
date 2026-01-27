@@ -1,6 +1,5 @@
 const template = document.createElement('template');
 template.innerHTML = `
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
 <section class="col-12 col-lg-4">
 <div class="card h-100">
     <div class="card-header d-flex justify-content-between align-items-center">
@@ -59,4 +58,3 @@ class ResourceResults extends HTMLElement {
 }
 
 customElements.define('resource-results', ResourceResults);
-
