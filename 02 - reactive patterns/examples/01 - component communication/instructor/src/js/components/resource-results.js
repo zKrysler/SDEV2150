@@ -62,8 +62,7 @@ class ResourceResults extends HTMLElement {
       );
 
       // broadcast the event to the current target (in this case, a ResourceResults component instance)
-      this.dispatchEvent(selectedEvent);
-      
+      this.dispatchEvent(resultSelectedEvent);
     }
   }
 
