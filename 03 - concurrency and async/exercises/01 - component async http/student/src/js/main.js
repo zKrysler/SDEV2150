@@ -5,6 +5,19 @@ import './components/resource-results.js';
 import './components/resource-details.js';
 
 // TODO: Stage 1: Replace hard-coded data with a fetch() call
+const API_ENDPOINT = 'http://localhost:3000/resources';
+
+async function fetchData() {
+  const response = await fetch(API_ENDPOINT, {
+    method: 'GET',
+  });
+  if (!response.ok) {
+    throw new Error('Network response failed');
+  }
+  const data = await response.json();
+
+  return data;
+}
 // Sample data for resources
 const resultData = [
   {
@@ -55,7 +68,15 @@ const resultData = [
 
 // TODO: Stage 1: After fetching from the API, pass the fetched resources into <resource-results>
 const resultsComponent = document.querySelector('resource-results');
-resultsComponent.results = resultData;
+async function loadResultsHandler() {
+  try {
+    const data = await fetchData();
+    resultsComponent.results = data;
+  } catch (error) {
+    console.error('failed to load data', error);
+  }
+}
+loadResultsHandler();
 
 // Filters emit state, main.js updates results and resets details
 const filtersComponent = document.querySelector('resource-filters');
