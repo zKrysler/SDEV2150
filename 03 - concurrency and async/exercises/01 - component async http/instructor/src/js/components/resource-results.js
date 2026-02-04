@@ -39,16 +39,25 @@ class ResourceResults extends HTMLElement {
   // how would I use this pattern for populating data?
   static get observedAttributes() {
     // this built-in method determines which component props to monitor
-    return ['some observed component property']
+    return ['source'];
   }
 
-  attributeChangedCallback(name, oldVal, newVal) {
-    // check if some value changed
-    // do stuff if so
+  attributeChangedCallback(name, oldVal, newVal) {  // default input params for this HTMLElement callback function
+    // a) ensure the attr changed is 'source' (in more complex cases, we might be monitoring multiple attributes)
+    // b) don't re-fetch data if the source URL didn't change
+    if (name === 'source' && oldVal != newVal) {
+      this.#fetchData(newVal);
+    }
   }
+
+  // TODO: Stage 2: Private method to fetch data from the provided source URL
+
 
   async #fetchData(url) {
-    // grab data from URL and write to results
+    // TODO: Stage 2: When `source` changes:
+    // - fetch(source)
+    // - handle loading and error states
+    // - set results with fetched data
   }
 
   set results(data) {
@@ -65,13 +74,7 @@ class ResourceResults extends HTMLElement {
     this.#applyFilters();
   }
 
-  // TODO: Stage 2: Private method to fetch data from the provided source URL
 
-  // TODO: Stage 2: When `source` changes:
-  // - Avoid refetching if the value is unchanged
-  // - fetch(source)
-  // - handle loading and error states
-  // - set results with fetched data
 
   _handleResultClick(event) {
     const button = event.target.closest('button[data-id]');
@@ -143,7 +146,7 @@ class ResourceResults extends HTMLElement {
   render() {
     const content = template.content.cloneNode(true);
 
-    // TODO: Stage 2: Render loading and error states before results when fetching asynchronously
+    // Already done: Stage 2: Render loading and error states before results when fetching asynchronously
     if (this.#filteredResults.length) {
       // Generate the list of results to display
       const resultsHtml = this.#filteredResults.map(result => `<button type="button" class="list-group-item list-group-item-action" data-id="${result.id}">
