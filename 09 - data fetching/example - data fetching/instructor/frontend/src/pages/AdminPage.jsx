@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router';
+import { useLoaderData, useNavigate } from 'react-router';
 
 import { useResources } from '../hooks/useResources';
 import Card from '../components/ui/Card';
@@ -18,19 +18,10 @@ const EMPTY_FORM_DATA = {
 };
 
 export default function AdminPage() {
-  const { resourceId } = useParams();
   const navigate = useNavigate();
 
-  const { resources, isLoading, error, refetch } = useResources();
+  const { resources, resourceId, setSelectedResource } = useLoaderData();
 
-  // We no longer require a useEffect to track the current resource. Instead, we 
-  // can derive it directly from the URL param and the list of resources. If the 
-  // resourceId param is present, we find the corresponding resource from the list.
-  // If it's not present, currentResource will be null, which indicates that we're
-  // creating a new resource rather than editing an existing one.
-
-  // Track the current resource based on the URL param. If no resourceId is present, 
-  // currentResource will be null..
   const currentResource = resourceId
     ? resources.find((item) => item.id === resourceId)
     : null;
@@ -93,25 +84,9 @@ export default function AdminPage() {
         </p>
       </div>
 
-      {isLoading && <p>Loading resources...</p>}
-
-      {error && (
-        <div className="alert alert-error">
-          <span>{error.message}</span>
-          <button className="btn btn-sm" onClick={refetch}>Try again</button>
-        </div>
-      )}
-
       <section className="md:col-span-3 lg:col-span-3">
         <Card title="Resource Form">
           <div className="card-body">
-            {resourceId && isLoading && <p>Loading selected resource...</p>}
-
-            {resourceId && !isLoading && !currentResource && (
-              <p className="text-sm text-red-600">
-                Selected resource could not be found.
-              </p>
-            )}
 
             {/* Update to make use of the ResourceForm component */}
             {(!resourceId || currentResource) && (
