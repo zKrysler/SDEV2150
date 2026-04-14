@@ -9,7 +9,7 @@ import {
 } from 'react-router';
 
 // our router functions
-import { resourceDirectoryLoader, adminLoader } from './router';
+import { resourceDirectoryLoader, adminLoader, adminAction } from './router';
 
 // our components
 import App from './App.jsx';
@@ -42,8 +42,8 @@ let router = createBrowserRouter(
   [
     { path: "/", Component: App, children: [
         { index: true, Component: ResourceDirectoryPage, loader: resourceDirectoryLoader },
-        { path: "admin",Component: AdminPage, loader: adminLoader, action: AdminAction },
-        { path: "admin/:resourceId", Component: AdminPage, loader: adminLoader, action: AdminAction },
+        { path: "admin",Component: AdminPage, loader: adminLoader, action: adminAction },
+        { path: "admin/:resourceId", Component: AdminPage, loader: adminLoader, action: adminAction },
       ]
     }
   ]
