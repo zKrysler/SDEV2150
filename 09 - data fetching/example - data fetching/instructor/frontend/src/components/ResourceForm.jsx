@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Form, useNavigate } from 'react-router';
 
 export default function ResourceForm({ initialData, isEditing, isSubmitting }) {
+  // note: we call this formData & consume request.formData in the action
   const [formData, setFormData] = useState(initialData);
   const navigate = useNavigate();
 
@@ -17,6 +18,14 @@ export default function ResourceForm({ initialData, isEditing, isSubmitting }) {
         [name]: type === 'checkbox' ? checked : value,
       })
     )
+  }
+
+  function handleReset() {
+    if (isEditing) {
+      navigate('/admin')
+    } else {
+      setFormData(initialData)
+    }
   }
 
   return (
@@ -125,17 +134,27 @@ export default function ResourceForm({ initialData, isEditing, isSubmitting }) {
         Open now
       </label>
 
-      <button
-        type="submit"
-        className="rounded bg-sky-600 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-700"
-        disabled={isSubmitting}
-      >
-        {isSubmitting
-          ? 'Saving...'
-          : isEditing
-            ? 'Update Resource'
-            : 'Add Resource'}
-      </button>
+      <div className="flex gap-2">
+        <button
+          type="button"
+          onClick={handleReset}
+          className="rounded border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50"
+        >
+          {isEditing ? 'Clear' : 'Reset'}
+        </button>
+
+        <button
+          type="submit"
+          className="rounded bg-sky-600 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-700"
+          disabled={isSubmitting}
+        >
+          {isSubmitting
+            ? 'Saving...'
+            : isEditing
+              ? 'Update Resource'
+              : 'Add Resource'}
+        </button>
+      </div>
 
     </Form>
   );
