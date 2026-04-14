@@ -19,6 +19,8 @@ const EMPTY_FORM_DATA = {
 
 export default function AdminPage() {
   const navigate = useNavigate();
+  // navigation object stores / lets us track submission state when we get to react-router <Form />
+  const isSubmitting = navigation.state === 'submitting';
 
   const { resources, resourceId, setSelectedResource } = useLoaderData();
 
@@ -39,42 +41,6 @@ export default function AdminPage() {
     openNow: currentResource.openNow,
   } : EMPTY_FORM_DATA;
 
-  function handleEditStart(resource) {
-    navigate(`/admin/${resource.id}`);
-  }
-
-  async function handleCreateResource(e, formData) {
-    e.preventDefault();
-    e.preventDefault();
-
-    const isEditing = Boolean(resourceId);
-    const url = isEditing
-      ? `http://localhost:3000/resources/${resourceId}`
-      : 'http://localhost:3000/resources';
-
-    const method = isEditing ? 'PUT' : 'POST';
-
-    const res = await fetch(url, {
-      method,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
-
-    if (!res.ok) {
-      throw new Error(`Could not ${isEditing ? 'update' : 'create'} resource`);
-    }
-
-    const savedResource = await res.json();
-    await refetch();
-
-    navigate(`/admin/${savedResource.id}`);
-  }
-
-  // Determine if we're in editing mode based on the presence of the resourceId param.
-  const isEditing = Boolean(resourceId);
-
   return (
     <>
       <div>
@@ -93,9 +59,8 @@ export default function AdminPage() {
               <ResourceForm
                 key={resourceId ?? 'new'}
                 initialData={initialFormData}
-                isEditing={isEditing}
-                onSubmit={handleCreateResource}
-                onReset={() => navigate('/admin')}
+                isEditing={Boolean(resourceId)}
+                isSubmitting={isSubmitting}
               />
             )}
           </div>
